@@ -160,6 +160,9 @@ void ClassDemoApp::UpdateAndRender() {
 				characterState = SLIDING;
 			}
 		}
+		if (keys[SDL_SCANCODE_ESCAPE]){
+			gameState = STATE_GAME_OVER;
+		}
 	}
 	Render();
 }
@@ -320,7 +323,15 @@ void ClassDemoApp::RenderGameRunning(){
 }
 
 void ClassDemoApp::RenderGameOver(){
+	Entity mainMenu = Entity(SpriteSheet(titleScreen, 1, 1, 1, 1, 8.0f));
+	mainMenu.Draw(program);
 
+	modelMatrix.identity();
+	modelMatrix.Translate(-3.0f, 3.0f, 0.0f);
+	program->setModelMatrix(modelMatrix);
+	DrawText(textTexture, "Thank you for playing Enigma.", 0.4f, -0.20f);
+
+	SDL_GL_SwapWindow(displayWindow);
 }
 
 GLuint ClassDemoApp::LoadTexture(const char *image_path) {
